@@ -146,4 +146,3 @@ const AttributeVector *EntityDefinition::get_attributes() const
 {
   return &_attributes;
 }
-
