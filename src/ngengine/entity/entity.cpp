@@ -87,21 +87,6 @@ void *Entity::__get(std::string name)
   return q;
 }
 
-void Entity::set_id(uint32_t id)
-{
-  _id = id;
-}
-
-uint32_t Entity::get_id() const
-{
-  return _id;
-}
-
-uint32_t *Entity::get_id_ptr()
-{
-  return &_id;
-}
-
 // -----------------
 
 EntityDefinition::EntityDefinition()

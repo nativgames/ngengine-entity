@@ -29,13 +29,6 @@ namespace entity {
     void __set(std::string name, void *p); // p is a pointer on the value
     void *__get(std::string name); // returns a pointer to the value
     
-    void set_id(uint32_t id);
-    uint32_t get_id() const;
-    uint32_t *get_id_ptr();
-    
-  protected:
-    uint32_t _id;
-    
   protected:
     Context *_context;
     
