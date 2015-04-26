@@ -2,6 +2,7 @@
 #define	NGENGINE_ENTITY_ENTITY_H
 
 #include <ngengine/entity/datatype.h>
+#include <ngengine/entity/serializer.h>
 #include <ngengine/entity/context.h>
 
 namespace nge {

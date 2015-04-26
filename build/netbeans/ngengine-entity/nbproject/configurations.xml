@@ -13,6 +13,11 @@
       <df name="include">
         <df name="ngengine">
           <df name="entity">
+            <df name="serializer">
+              <df name="raw">
+                <in>serializer.h</in>
+              </df>
+            </df>
             <in>context.h</in>
             <in>datatype.h</in>
             <in>serializer.h</in>
@@ -27,6 +32,11 @@
         </df>
         <df name="ngengine">
           <df name="entity">
+            <df name="serializer">
+              <df name="raw">
+                <in>serializer.cpp</in>
+              </df>
+            </df>
             <in>context.cpp</in>
             <in>entity.cpp</in>
             <in>serializer.cpp</in>
@@ -164,6 +174,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/ngengine/entity/serializer/raw/serializer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="../../../src/nge-orm-utils/entity.cpp"
             ex="false"
             tool="1"
@@ -196,6 +211,11 @@
             flavor2="8">
       </item>
       <item path="../../../src/ngengine/entity/serializer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../src/ngengine/entity/serializer/raw/serializer.cpp"
             ex="false"
             tool="1"
             flavor2="0">

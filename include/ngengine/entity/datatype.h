@@ -21,7 +21,8 @@ namespace entity {
     SINT64  = 8,
     FLOAT   = 9,
     DOUBLE  = 10,
-    STRING  = 11   // std::string
+    STRING  = 11,   // std::string
+    ENTITY =  12
   };
     
 }
