@@ -16,8 +16,8 @@ namespace entity {
     virtual void *create_entity() = 0;
     virtual void copy(const void *src, void *dest) = 0;
     
-    virtual std::string serialize(void *to_serialize) = 0;
-    virtual void decode(const std::string &to_decode, void *dest) = 0;
+    virtual void serialize(const void *to_serialize, void *dest) = 0;
+    virtual void decode(const void *to_decode, void *dest) = 0;
     
   };
   
