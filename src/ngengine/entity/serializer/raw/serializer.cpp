@@ -77,3 +77,27 @@ void name##Serializer::decode(const void *to_decode, void *dest)\
 }\
 
 DEFINE_STR_SERIALIZER(string, STRING)
+
+// ----------
+  
+RawContext::RawContext()
+{
+  entity::AbstractSerializer *s;
+  
+#define ADD_SERIALIZER(type) \
+  s = new type##Serializer();\
+  this->_serializers.insert(std::make_pair(s->get_supported_type(), s));
+  
+  ADD_SERIALIZER(uint8_t)
+  ADD_SERIALIZER(uint16_t)
+  ADD_SERIALIZER(uint32_t)
+  ADD_SERIALIZER(uint64_t)
+  //ADD_SERIALIZER(int8_t)
+  //ADD_SERIALIZER(int16_t)
+  //ADD_SERIALIZER(int32_t)
+  //ADD_SERIALIZER(int64_t)
+  //ADD_SERIALIZER(float)
+  //ADD_SERIALIZER(double)
+  ADD_SERIALIZER(string)
+}
+

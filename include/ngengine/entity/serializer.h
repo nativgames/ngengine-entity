@@ -43,7 +43,5 @@ namespace entity {
     void decode(const void *to_decode, void *dest);\
   };\
 
-#include <ngengine/entity/serializer/raw/serializer.h>
-
 #endif	/* SERIALIZER_H */
 

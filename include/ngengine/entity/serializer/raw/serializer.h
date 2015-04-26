@@ -8,6 +8,7 @@
  */
 
 #include <ngengine/entity/serializer.h>
+#include <ngengine/entity/context.h>
 
 namespace nge {
 namespace entity {
@@ -25,6 +26,12 @@ namespace raw {
   //DECLARE_SERIALIZER(float)
   //DECLARE_SERIALIZER(double)
   DECLARE_SERIALIZER(string)
+    
+  // define the raw context
+  class RawContext : public Context {
+    public:
+      RawContext();
+  };
   
 }
 }
