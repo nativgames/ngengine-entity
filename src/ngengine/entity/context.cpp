@@ -1,5 +1,6 @@
 #include <ngengine/entity/context.h>
 
+using namespace nge;
 using namespace nge::entity;
 
 Context::~Context()
@@ -26,4 +27,14 @@ std::string Context::pop_back_error_message()
   _error_messages.pop_back();
   
   return msg;
+}
+
+std::map<uint32_t, AbstractSerializer *> *Context::get_serializers()
+{
+  return &_serializers;
+}
+
+std::map<std::string, EntityDefinition *> *Context::get_entity_definitions()
+{
+  return &_entity_definitions;
 }
