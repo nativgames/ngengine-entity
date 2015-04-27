@@ -27,6 +27,11 @@ Entity::~Entity()
 {
 }
 
+Context *Entity::__get_context()
+{
+  return _context;
+}
+
 void Entity::__set(std::string name, void *p)
 {
   EntityDefinition *def = this->__get_definition();

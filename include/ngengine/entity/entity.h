@@ -26,6 +26,7 @@ namespace entity {
     virtual ~Entity();
     
     virtual EntityDefinition *__get_definition() const = 0; // create an entity definition
+    Context *__get_context();
    
     void __set(std::string name, void *p); // p is a pointer on the value
     void *__get(std::string name); // returns a pointer to the value
