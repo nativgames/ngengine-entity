@@ -1,9 +1,23 @@
 #include <ngengine/entity/serializer/raw/serializer.h>
 #include <arpa/inet.h>
+#include <stdlib.h>
+#include <string.h>
 
 using namespace nge::entity;
 using namespace nge::entity::serializer::raw;
 
+RawBuffer::RawBuffer()
+{
+  size = 0;
+  variable_size = false;
+  data = nullptr;
+}
+
+RawBuffer::~RawBuffer()
+{
+  free(data);
+}
+    
 // Macro declaring serializer for integers
 #define DEFINE_INT_SERIALIZER(name, type, id, serialize_fn, decode_fn) \
 name##Serializer::~name##Serializer()\
@@ -24,12 +38,20 @@ void name##Serializer::copy(const void *src, void *dest)\
 }\
 void name##Serializer::serialize(const void *to_serialize, void *dest)\
 {\
-  *((name *)dest) = serialize_fn(*((name *) to_serialize));\
+ RawBuffer *buf = (RawBuffer *) dest;\
+ buf->variable_size = false;\
+ buf->size = sizeof(type);\
+ buf->data = malloc(sizeof(type)); \
+ type v = serialize_fn(*((type *) to_serialize));\
+ memcpy(buf->data, &v, sizeof(type));\
 }\
 \
 void name##Serializer::decode(const void *to_decode, void *dest)\
 {\
-  *((name *)dest) = decode_fn(*((name *) to_decode));\
+  RawBuffer *buf = (RawBuffer *) to_decode;\
+  type v;\
+  memcpy(&v, buf->data, sizeof(type));\
+  *((type *)dest) = v;\
 }\
 
 // declare the integers serializers
@@ -48,35 +70,45 @@ DEFINE_INT_SERIALIZER(uint64_t, uint64_t, UINT64, htobe64, be64toh)
 //DEFINE_INT_SERIALIZER(double, double, DOUBLE, , )
 
 // use macro overkill 
-#define DEFINE_STR_SERIALIZER(name, id) \
-name##Serializer::~name##Serializer()\
-{\
-}\
-\
-int name##Serializer::get_supported_type()\
-{\
-  return id;\
-}\
-void *name##Serializer::create_entity()\
-{\
-  return new std::string;\
-}\
-void name##Serializer::copy(const void *src, void *dest)\
-{\
-  *((std::string *) dest) = *((std::string *) src);\
-}\
-\
-void name##Serializer::serialize(const void *to_serialize, void *dest)\
-{\
-  *((std::string *)dest) =  *((std::string *)to_serialize);\
-}\
-\
-void name##Serializer::decode(const void *to_decode, void *dest)\
-{\
-  *((std::string *) dest) = *((std::string *)to_decode);\
-}\
 
-DEFINE_STR_SERIALIZER(string, STRING)
+stringSerializer::~stringSerializer()
+{
+}
+
+int stringSerializer::get_supported_type()
+{
+  return STRING;
+}
+void *stringSerializer::create_entity()
+{
+  return new std::string;
+}
+void stringSerializer::copy(const void *src, void *dest)
+{
+  *((std::string *) dest) = *((std::string *) src);
+}
+
+void stringSerializer::serialize(const void *to_serialize, void *dest)
+{
+  RawBuffer *buf = (RawBuffer *) dest;
+  std::string *str = ((std::string *)to_serialize);
+  buf->variable_size = true;
+  buf->size = strlen(str->c_str());
+  buf->data = malloc(buf->size);
+  memcpy(buf->data, str->c_str(), buf->size);
+}
+
+void stringSerializer::decode(const void *to_decode, void *dest)
+{
+  RawBuffer *buf = (RawBuffer *) to_decode;
+  char *p = (char *) buf->data;
+  std::string *str = ((std::string *) dest);
+  
+  for(int i = 0; i < buf->size; i++) {
+    *str += *p;
+    p++;
+  }
+}
 
 // ----------
   

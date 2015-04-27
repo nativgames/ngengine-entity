@@ -15,6 +15,16 @@ namespace entity {
 namespace serializer {
 namespace raw {
   
+  // Buffer used to serialize / deserialize
+  struct RawBuffer {
+    RawBuffer();
+    ~RawBuffer();
+    
+    int size;
+    bool variable_size;
+    void *data;
+  };
+  
   DECLARE_SERIALIZER(uint8_t)
   DECLARE_SERIALIZER(uint16_t)
   DECLARE_SERIALIZER(uint32_t)
