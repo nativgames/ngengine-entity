@@ -20,7 +20,7 @@ namespace raw {
     RawBuffer();
     ~RawBuffer();
     
-    int size;
+    uint32_t size;
     bool variable_size;
     void *data;
   };
