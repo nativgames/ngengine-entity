@@ -38,7 +38,7 @@ namespace entity {
   
   // AttributeDefinition can be herited in order to extend informations: primary key, nullable etc..
   typedef std::vector<AttributeDefinition *> AttributeVector;
-  typedef Entity *(*EntityFactory)();
+  typedef Entity *(*EntityFactory)(Context *);
 
   class EntityDefinition {
   public:

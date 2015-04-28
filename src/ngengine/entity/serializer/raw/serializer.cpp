@@ -104,7 +104,7 @@ void stringSerializer::decode(const void *to_decode, void *dest)
   char *p = (char *) buf->data;
   std::string *str = ((std::string *) dest);
   
-  for(int i = 0; i < buf->size; i++) {
+  for(uint32_t i = 0; i < buf->size; i++) {
     *str += *p;
     p++;
   }
