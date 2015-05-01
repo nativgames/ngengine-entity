@@ -19,7 +19,7 @@ RawBuffer::~RawBuffer()
 }
     
 // Macro declaring serializer for integers
-#define DEFINE_INT_SERIALIZER(name, type, id, serialize_fn, decode_fn) \
+#define DEFINE_INT_SERIALIZER(name, id, serialize_fn, decode_fn) \
 name##Serializer::~name##Serializer()\
 {\
 }\
@@ -40,25 +40,25 @@ void name##Serializer::serialize(const void *to_serialize, void *dest)\
 {\
  RawBuffer *buf = (RawBuffer *) dest;\
  buf->variable_size = false;\
- buf->size = sizeof(type);\
- buf->data = malloc(sizeof(type)); \
- type v = serialize_fn(*((type *) to_serialize));\
- memcpy(buf->data, &v, sizeof(type));\
+ buf->size = sizeof(name);\
+ buf->data = malloc(sizeof(name)); \
+ name v = serialize_fn(*((name *) to_serialize));\
+ memcpy(buf->data, &v, sizeof(name));\
 }\
 \
 void name##Serializer::decode(const void *to_decode, void *dest)\
 {\
   RawBuffer *buf = (RawBuffer *) to_decode;\
-  type v;\
-  memcpy(&v, buf->data, sizeof(type));\
-  *((type *)dest) = v;\
+  name v;\
+  memcpy(&v, buf->data, sizeof(name));\
+  *((name *)dest) = v;\
 }\
 
 // declare the integers serializers
-DEFINE_INT_SERIALIZER(uint8_t, uint16_t, UINT8, , )
-DEFINE_INT_SERIALIZER(uint16_t, uint16_t, UINT16, htobe16, be16toh)
-DEFINE_INT_SERIALIZER(uint32_t, uint32_t, UINT32, htobe32, be32toh)
-DEFINE_INT_SERIALIZER(uint64_t, uint64_t, UINT64, htobe64, be64toh)
+DEFINE_INT_SERIALIZER(uint8_t, UINT8, , )
+DEFINE_INT_SERIALIZER(uint16_t, UINT16, htobe16, be16toh)
+DEFINE_INT_SERIALIZER(uint32_t, UINT32, htobe32, be32toh)
+DEFINE_INT_SERIALIZER(uint64_t, UINT64, htobe64, be64toh)
 // TODO: find how to treat endianness with signed variable
 //DEFINE_INT_SERIALIZER(int8_t, int16_t, SINT8, , )
 //DEFINE_INT_SERIALIZER(int16_t, int16_t, SINT16, htons, )
