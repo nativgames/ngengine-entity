@@ -51,7 +51,7 @@ void name##Serializer::decode(const void *to_decode, void *dest)\
   RawBuffer *buf = (RawBuffer *) to_decode;\
   name v;\
   memcpy(&v, buf->data, sizeof(name));\
-  *((name *)dest) = v;\
+  *((name *)dest) = decode_fn(v);\
 }\
 
 // declare the integers serializers
